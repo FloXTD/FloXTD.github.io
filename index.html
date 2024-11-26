@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RPG Game</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="game-container">
+        <h1>Welcome to Orinthia RPG Game</h1>
+
+        <div id="player-info">
+            <h2>Player Info</h2>
+            <p>Name: <span id="player-name">Player's Name</span></p>
+            <p>Health: <span id="player-health">100</span></p>
+            <p>Stamina: <span id="player-stamina">100</span></p>
+            <p>Mana: <span id="player-mana">100</span></p>
+            <p>Strength: <span id="player-strength">100</span></p>
+            <p>Intelligence: <span id="player-intelligence">100</span></p>
+        </div>
+
+        <div id="monster-info">
+            <h2>Monster Info</h2>
+            <p>Name: <span id="monster-name">Goblin</span></p>
+            <p>Health: <span id="monster-health">100</span></p>
+        </div>
+
+        <div id="battle-log">
+            <h2>Battle Log</h2>
+            <ul id="battle-entries"></ul>
+        </div>
+
+        <div id="action-buttons">
+            <button class="button" onclick="attack()">Attack</button>
+            <button class="button" onclick="run()">Run</button>
+            <button class="button" onclick="castSpell()">Cast Spell</button>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
