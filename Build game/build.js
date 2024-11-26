@@ -1,9 +1,10 @@
 // Game state
 const gameState = {
-    resources: { wood: 0, stone: 0, food: 0 },
+    resources: { wood: 0, stone: 0, food: 10 },
     villagers: 0,
     maxVillagers: 0,
     buildings: { houses: 0, lumberMills: 0, quarries: 0 },
+    actions: 0, // Counts actions for food consumption
 };
 
 // Update UI
@@ -27,6 +28,8 @@ function logMessage(message) {
 function gatherResource(resource) {
     gameState.resources[resource]++;
     logMessage(`You gathered 1 ${resource}.`);
+    gameState.actions++;
+    checkFoodConsumption();
     updateUI();
 }
 
@@ -42,26 +45,42 @@ function build(structure) {
         gameState.resources.wood -= 100;
         gameState.resources.stone -= 50;
         gameState.buildings.lumberMills++;
-        logMessage("You built a lumber mill. (Automates wood gathering)");
-        automateResource("wood", 2);
+        logMessage("You built a lumber mill.");
     } else if (structure === "quarry" && gameState.resources.wood >= 150 && gameState.resources.stone >= 100) {
         gameState.resources.wood -= 150;
         gameState.resources.stone -= 100;
         gameState.buildings.quarries++;
-        logMessage("You built a quarry. (Automates stone gathering)");
-        automateResource("stone", 2);
+        logMessage("You built a quarry.");
     } else {
         logMessage("Not enough resources to build that!");
     }
     updateUI();
 }
 
-// Automate resource gathering
-function automateResource(resource, amountPerSecond) {
-    setInterval(() => {
-        gameState.resources[resource] += amountPerSecond;
-        updateUI();
-    }, 1000);
+// Food consumption
+function checkFoodConsumption() {
+    if (gameState.actions >= 20) {
+        const totalFoodNeeded = 1 + gameState.villagers;
+        if (gameState.resources.food >= totalFoodNeeded) {
+            gameState.resources.food -= totalFoodNeeded;
+            logMessage(`Food consumed: ${totalFoodNeeded}`);
+        } else {
+            logMessage("Not enough food! Villagers starve.");
+        }
+        gameState.actions = 0; // Reset actions
+    }
+}
+
+// Buy a villager
+function buyVillager() {
+    if (gameState.resources.food >= 5 && gameState.villagers < gameState.maxVillagers) {
+        gameState.resources.food -= 5;
+        gameState.villagers++;
+        logMessage("You hired a villager.");
+    } else {
+        logMessage("Not enough food or housing space!");
+    }
+    updateUI();
 }
 
 // Initial UI update
