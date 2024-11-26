@@ -64,9 +64,11 @@ function attack() {
         player.stamina -= 5;
         logBattle(`${player.name} attacks with their ${player.weapon} for ${damage} damage!`);
         checkMonsterHealth();
+        monsterAttack();
     } else {
         logBattle("Not enough stamina to attack.");
     }
+    restoreStamina();
     updateStats();
 }
 
@@ -78,23 +80,81 @@ function run() {
     } else {
         logBattle("Not enough stamina to run!");
     }
+    restoreStamina();
     updateStats();
 }
 
-// Log battle actions
-function logBattle(message) {
-    const battleLog = document.getElementById("battle-entries");
-    const logEntry = document.createElement("li");
-    logEntry.innerText = message;
-    battleLog.appendChild(logEntry);
+// Cast Spell function
+function castSpell() {
+    document.getElementById("action-buttons").style.display = "none";
+    document.getElementById("spell-choice").style.display = "block";
 }
 
-// Check monster health
-function checkMonsterHealth() {
-    if (monster.health <= 0) {
-        logBattle(`${monster.name} has been defeated!`);
+// Fireball spell
+function castFireball() {
+    if (player.mana >= 25) {
+        let damage = Math.floor(Math.random() * 30) + 10;
+        monster.health -= damage;
+        player.mana -= 25;
+        logBattle(`${player.name} casts Fireball for ${damage} damage!`);
+        checkMonsterHealth();
+    } else {
+        logBattle("Not enough mana for Fireball.");
+    }
+    endSpellCast();
+}
+
+// Lightning Strike spell
+function castLightningStrike() {
+    if (player.mana >= 40) {
+        let damage = Math.floor(Math.random() * 50) + 20;
+        monster.health -= damage;
+        player.mana -= 40;
+        logBattle(`${player.name} casts Lightning Strike for ${damage} damage!`);
+        checkMonsterHealth();
+    } else {
+        logBattle("Not enough mana for Lightning Strike.");
+    }
+    endSpellCast();
+}
+
+// End spell cast
+function endSpellCast() {
+    document.getElementById("action-buttons").style.display = "block";
+    document.getElementById("spell-choice").style.display = "none";
+    monsterAttack();
+    restoreStamina();
+    updateStats();
+}
+
+// Monster attack
+function monsterAttack() {
+    if (monster.health > 0) {
+        let damage = Math.floor(Math.random() * monster.strength) + 1;
+        player.health -= damage;
+        logBattle(`${monster.name} attacks back for ${damage} damage!`);
+    }
+    if (player.health <= 0) {
+        logBattle(`${player.name} has been defeated.`);
     }
 }
 
-// Initialize game
-updateStats();
+// Check monster's health
+function checkMonsterHealth() {
+    if (monster.health <= 0) {
+        logBattle(`${monster.name} has been defeated.`);
+    }
+}
+
+// Restore stamina
+function restoreStamina() {
+    player.stamina = Math.min(player.stamina + 10, races[player.race].stamina);
+}
+
+// Log battle events
+function logBattle(message) {
+    const log = document.getElementById("battle-entries");
+    const entry = document.createElement("li");
+    entry.textContent = message;
+    log.appendChild(entry);
+}
