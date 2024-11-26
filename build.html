@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Village Builder</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="game-container">
+        <h1>Village Builder</h1>
+        <div id="resources">
+            <h2>Resources</h2>
+            <p>Wood: <span id="wood">0</span></p>
+            <p>Stone: <span id="stone">0</span></p>
+            <p>Food: <span id="food">0</span></p>
+            <p>Villagers: <span id="villagers">0</span> / <span id="max-villagers">0</span></p>
+        </div>
+
+        <div id="actions">
+            <h2>Actions</h2>
+            <button onclick="gatherResource('wood')">Gather Wood</button>
+            <button onclick="gatherResource('stone')">Gather Stone</button>
+            <button onclick="gatherResource('food')">Gather Food</button>
+        </div>
+
+        <div id="buildings">
+            <h2>Buildings</h2>
+            <button onclick="build('house')">Build House (50 Wood, 30 Stone)</button>
+            <button onclick="build('lumberMill')">Build Lumber Mill (100 Wood, 50 Stone)</button>
+            <button onclick="build('quarry')">Build Quarry (150 Wood, 100 Stone)</button>
+        </div>
+
+        <div id="log">
+            <h2>Log</h2>
+            <ul id="log-entries"></ul>
+        </div>
+    </div>
+    <script src="game.js"></script>
+</body>
+</html>
