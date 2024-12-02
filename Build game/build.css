@@ -74,3 +74,18 @@ button:disabled {
     background-color: #7f8c8d;
     cursor: not-allowed;
 }
+.progress-container {
+    width: 100%;
+    background-color: #f3f3f3;
+    border: 1px solid #ccc;
+    height: 20px;
+    margin: 5px 0;
+    display: none;
+}
+
+.progress-bar {
+    width: 0%;
+    height: 100%;
+    background-color: #4caf50;
+    transition: width 0.1s linear;
+}
