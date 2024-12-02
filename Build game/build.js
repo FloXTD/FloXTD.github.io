@@ -4,6 +4,7 @@ let iron = 0, copper = 0, gold = 0;
 let villagers = 0, idleVillagers = 0, maxVillagers = 0;
 let woodCooldown = 0, stoneCooldown = 0, foodCooldown = 0;
 let cookingCooldown = 0;
+let assignedVillagers = { wood: 0, stone: 0, food: 0 }; // Track assigned villagers
 
 // Update displayed resources
 function updateResources() {
@@ -73,22 +74,24 @@ function showCooldown(type, time) {
 // Assign villagers to gather resources
 function assignVillagerToGather(type) {
     if (idleVillagers > 0) {
-        if (type === 'wood') {
-            idleVillagers--;
-            let gatheredWood = Math.floor(Math.random() * 6) + 5; // Gather 5-10 wood
-            wood += gatheredWood;
+        if (assignedVillagers[type] < 1) { // Check if a villager is already assigned to this task
+            // Assign the villager
+            assignedVillagers[type]++;
+            idleVillagers--; // Reduce idle villagers
             updateResources();
-        } else if (type === 'stone') {
-            idleVillagers--;
-            let gatheredStone = Math.floor(Math.random() * 6) + 5; // Gather 5-10 stone
-            stone += gatheredStone;
-            updateResources();
-        } else if (type === 'food') {
-            idleVillagers--;
-            let gatheredFood = Math.floor(Math.random() * 3) + 1; // Gather 1-3 food
-            food += gatheredFood;
-            updateResources();
+
+            // Start gathering
+            gatherResource(type);
+
+            // After 10 seconds, the villager finishes the task
+            setTimeout(function() {
+                assignedVillagers[type]--;
+                idleVillagers++; // Add villager back to idle
+                updateResources();
+            }, 10000); // Adjust the time as necessary
         }
+    } else {
+        alert('No idle villagers available!');
     }
 }
 
