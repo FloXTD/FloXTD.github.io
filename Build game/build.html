@@ -21,19 +21,21 @@
         </div>
         <div id="buildings">
             <h2>Build:</h2>
-            <button id="build-hut">Build Hut (Cost: 10 Wood, 5 Stone)</button>
+            <button id="build-hut">Build Hut (Cost: <span id="hut-cost-wood">10</span> Wood, <span id="hut-cost-stone">5</span> Stone)</button>
             <p>Huts: <span id="huts">0</span></p>
         </div>
         <div id="villagers">
             <h2>Villagers</h2>
-            <button id="buy-villager">Buy Villager (Cost: 15 Food)</button>
-            <p>Total Villagers: <span id="villager-count">0</span></p>
+            <button id="buy-villager">Buy Villager (Cost: <span id="villager-cost-food">15</span> Food)</button>
+            <p>Total Villagers: <span id="villager-count">0</span> / <span id="villager-capacity">0</span></p>
             <p>Unassigned: <span id="unassigned-villagers">0</span></p>
             <h3>Assign Jobs</h3>
             <button id="assign-woodcutter">Assign Woodcutter</button>
             <p>Woodcutters: <span id="woodcutters">0</span></p>
             <button id="assign-miner">Assign Miner</button>
             <p>Miners: <span id="miners">0</span></p>
+            <button id="assign-food-gatherer">Assign Food Gatherer</button>
+            <p>Food Gatherers: <span id="food-gatherers">0</span></p>
         </div>
     </div>
     <script src="game.js"></script>
