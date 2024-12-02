@@ -142,6 +142,7 @@ function buyBuilding(type) {
             stone -= 15;
             villagers += 1;
             maxVillagers += 2; // Increase the number of max villagers
+            idleVillagers++; // Add a new idle villager
             updateResources();
             alert('You have built a House!');
         }
