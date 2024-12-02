@@ -3,64 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Village Builder</title>
-    <link rel="stylesheet" href="build.css">
-    <link rel="icon" href="https://www.pngkey.com/png/full/302-3020197_find-your-tribe-where-they-gather-village-icon.png">
+    <title>Village Building Game</title>
+    <link rel="icon" href="https://www.pngkey.com/png/detail/302-3020197_find-your-tribe-where-they-gather-village-icon.png">
+    <style>
+        .progress-container {
+            width: 100%;
+            background-color: #f3f3f3;
+            border: 1px solid #ccc;
+            height: 20px;
+            margin: 5px 0;
+            display: none; /* Initially hidden */
+        }
+
+        .progress-bar {
+            width: 0%;
+            height: 100%;
+            background-color: #4caf50;
+            transition: width 0.1s linear;
+        }
+
+        /* Some basic styling for the buttons and display */
+        .button {
+            padding: 10px;
+            margin: 5px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #45a049;
+        }
+
+        /* Display panel */
+        #log-entries {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        #log-entries li {
+            margin-bottom: 5px;
+        }
+    </style>
 </head>
 <body>
-    <div id="game-container">
-        <header>
-            <h1>Village Builder</h1>
-        </header>
-        <main>
-            <section id="resources">
-                <h2>Resources</h2>
-                <p>Wood: <span id="wood">0</span></p>
-                <p>Stone: <span id="stone">0</span></p>
-                <p>Food: <span id="food">10</span></p>
-                <p>Ores: <span id="ores">0</span></p>
-                <p>Planks: <span id="planks">0</span></p>
-            </section>
 
-            <section id="gather">
-                <h2>Gather Resources</h2>
-                <button id="gatherWoodButton">Gather Wood</button>
-                <button id="gatherStoneButton">Gather Stone</button>
-                <button id="gatherFoodButton">Gather Food</button>
-            </section>
+    <h1>Village Building Game</h1>
 
-            <section id="population">
-                <h2>Population</h2>
-                <p>Villagers: <span id="villagers">0</span> / <span id="max-villagers">0</span></p>
-                <p>Idle Villagers: <span id="idleVillagers">0</span></p>
-                <button id="hireVillagerButton">Hire Villager (5 Food)</button>
-            </section>
-
-            <section id="actions">
-                <h2>Assign Jobs</h2>
-                <button id="assignWoodButton">Assign to Gather Wood</button>
-                <button id="assignStoneButton">Assign to Gather Stone</button>
-                <button id="assignFoodButton">Assign to Gather Food</button>
-            </section>
-
-            <section id="buildings">
-                <h2>Buildings</h2>
-                <button id="buildHouseButton">Build House (50 Wood, 30 Stone)</button>
-                <button id="buildLumberMillButton">Build Lumber Mill (100 Wood, 50 Stone)</button>
-                <button id="buildQuarryButton">Build Quarry (150 Wood, 100 Stone)</button>
-            </section>
-
-            <section id="tools">
-                <h2>Tools</h2>
-                <button id="buyPickaxeButton">Buy Pickaxe (20 Wood, 10 Stone)</button>
-                <button id="buySawButton">Buy Saw (20 Wood, 10 Stone)</button>
-            </section>
-        </main>
-        <footer>
-            <p>Log</p>
-            <ul id="log-entries"></ul>
-        </footer>
+    <div>
+        <button id="gatherWoodButton" class="button">Gather Wood</button>
+        <div class="progress-container">
+            <div id="wood-progress" class="progress-bar"></div>
+        </div>
     </div>
+    
+    <div>
+        <button id="gatherStoneButton" class="button">Gather Stone</button>
+        <div class="progress-container">
+            <div id="stone-progress" class="progress-bar"></div>
+        </div>
+    </div>
+    
+    <div>
+        <button id="gatherFoodButton" class="button">Gather Food</button>
+        <div class="progress-container">
+            <div id="food-progress" class="progress-bar"></div>
+        </div>
+    </div>
+
+    <h2>Resources</h2>
+    <p>Wood: <span id="wood">0</span></p>
+    <p>Stone: <span id="stone">0</span></p>
+    <p>Food: <span id="food">10</span></p>
+    <p>Ores: <span id="ores">0</span></p>
+    <p>Planks: <span id="planks">0</span></p>
+    <p>Iron: <span id="iron">0</span></p>
+    <p>Copper: <span id="copper">0</span></p>
+    <p>Gold: <span id="gold">0</span></p>
+    
+    <h3>Villagers: <span id="villagers">0</span> / <span id="max-villagers">0</span> Idle: <span id="idleVillagers">0</span></h3>
+    
+    <h3>Logs</h3>
+    <ul id="log-entries"></ul>
+
     <script src="build.js"></script>
 </body>
 </html>
