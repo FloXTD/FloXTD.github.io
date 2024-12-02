@@ -111,6 +111,43 @@ function cookOre() {
     }
 }
 
+// Building purchase functions
+function buyBuilding(type) {
+    if (type === 'quarry') {
+        if (wood >= 10 && stone >= 10) {
+            wood -= 10;
+            stone -= 10;
+            ores += 5; // You can now gather ores
+            updateResources();
+            alert('You have purchased a Quarry!');
+        }
+    } else if (type === 'lumberMill') {
+        if (wood >= 15 && stone >= 15) {
+            wood -= 15;
+            stone -= 15;
+            planks += 5; // You can now gather planks
+            updateResources();
+            alert('You have purchased a Lumber Mill!');
+        }
+    } else if (type === 'cooker') {
+        if (wood >= 20 && stone >= 10) {
+            wood -= 20;
+            stone -= 10;
+            updateResources();
+            alert('You have built an Ore Cooker!');
+        }
+    } else if (type === 'house') {
+        if (wood >= 30 && stone >= 15) {
+            wood -= 30;
+            stone -= 15;
+            villagers += 1;
+            maxVillagers += 2; // Increase the number of max villagers
+            updateResources();
+            alert('You have built a House!');
+        }
+    }
+}
+
 // Event listeners for buttons
 document.getElementById('gatherWoodButton').addEventListener('click', function() {
     gatherResource('wood');
@@ -133,41 +170,18 @@ document.getElementById('assignVillagerFoodButton').addEventListener('click', fu
     assignVillagerToGather('food');
 });
 
-// Build buildings
+// Building purchase buttons
 document.getElementById('buyQuarryButton').addEventListener('click', function() {
-    if (wood >= 10 && stone >= 10) {
-        wood -= 10;
-        stone -= 10;
-        ores += 5; // You can now gather ores
-        updateResources();
-    }
+    buyBuilding('quarry');
 });
-
 document.getElementById('buyLumberMillButton').addEventListener('click', function() {
-    if (wood >= 15 && stone >= 15) {
-        wood -= 15;
-        stone -= 15;
-        planks += 5; // You can now gather planks
-        updateResources();
-    }
+    buyBuilding('lumberMill');
 });
-
 document.getElementById('buildCookerButton').addEventListener('click', function() {
-    if (wood >= 20 && stone >= 10) {
-        wood -= 20;
-        stone -= 10;
-        updateResources();
-    }
+    buyBuilding('cooker');
 });
-
 document.getElementById('buildHouseButton').addEventListener('click', function() {
-    if (wood >= 30 && stone >= 15) {
-        wood -= 30;
-        stone -= 15;
-        villagers += 1;
-        maxVillagers += 2; // Increase the number of max villagers
-        updateResources();
-    }
+    buyBuilding('house');
 });
 
 // Ore cooking
