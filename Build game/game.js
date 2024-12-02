@@ -44,6 +44,22 @@ function updateVillagers() {
     document.getElementById('food-gatherers').textContent = foodGatherers;
 }
 
+// Manual gathering
+document.getElementById('collect-wood').addEventListener('click', () => {
+    wood += 1;
+    updateResources();
+});
+
+document.getElementById('collect-stone').addEventListener('click', () => {
+    stone += 1;
+    updateResources();
+});
+
+document.getElementById('collect-food').addEventListener('click', () => {
+    food += 1;
+    updateResources();
+});
+
 // Automatically gather resources
 function gatherResources() {
     wood += woodcutters;
