@@ -13,6 +13,11 @@ let unassignedVillagers = 0;
 // Jobs
 let woodcutters = 0;
 let miners = 0;
+let foodGatherers = 0;
+
+// Costs
+let hutCost = { wood: 10, stone: 5 };
+let villagerCost = 15;
 
 // Update resources display
 function updateResources() {
@@ -24,14 +29,19 @@ function updateResources() {
 // Update buildings display
 function updateBuildings() {
     document.getElementById('huts').textContent = huts;
+    document.getElementById('hut-cost-wood').textContent = hutCost.wood;
+    document.getElementById('hut-cost-stone').textContent = hutCost.stone;
 }
 
 // Update villagers display
 function updateVillagers() {
     document.getElementById('villager-count').textContent = villagers;
+    document.getElementById('villager-capacity').textContent = huts * 2; // Capacity = 2 villagers per hut
     document.getElementById('unassigned-villagers').textContent = unassignedVillagers;
+    document.getElementById('villager-cost-food').textContent = villagerCost;
     document.getElementById('woodcutters').textContent = woodcutters;
     document.getElementById('miners').textContent = miners;
+    document.getElementById('food-gatherers').textContent = foodGatherers;
 }
 
 // Collect wood
@@ -48,22 +58,21 @@ document.getElementById('collect-stone').addEventListener('click', () => {
 
 // Gather food
 document.getElementById('collect-food').addEventListener('click', () => {
-    food += 1; // Increase food count
+    food += 1 + foodGatherers; // Food Gatherers add extra food
     updateResources();
 });
 
 // Build hut
 document.getElementById('build-hut').addEventListener('click', () => {
-    const woodCost = 10;
-    const stoneCost = 5;
-
-    // Check if enough resources
-    if (wood >= woodCost && stone >= stoneCost) {
-        wood -= woodCost;  // Deduct wood cost
-        stone -= stoneCost;  // Deduct stone cost
-        huts += 1;  // Increase hut count
+    if (wood >= hutCost.wood && stone >= hutCost.stone) {
+        wood -= hutCost.wood;
+        stone -= hutCost.stone;
+        huts += 1;
+        hutCost.wood += 5; // Increase hut cost
+        hutCost.stone += 5;
         updateResources();
         updateBuildings();
+        updateVillagers();
     } else {
         alert('Not enough resources!');
     }
@@ -71,21 +80,24 @@ document.getElementById('build-hut').addEventListener('click', () => {
 
 // Buy villager
 document.getElementById('buy-villager').addEventListener('click', () => {
-    const foodCost = 15;
-
-    // Check if enough food
-    if (food >= foodCost) {
-        food -= foodCost;  // Deduct food cost
-        villagers += 1;  // Increase villager count
-        unassignedVillagers += 1; // New villager is unassigned
-        updateResources();
-        updateVillagers();
+    const capacity = huts * 2;
+    if (villagers < capacity) {
+        if (food >= villagerCost) {
+            food -= villagerCost;
+            villagers += 1;
+            unassignedVillagers += 1;
+            villagerCost += 5; // Increase villager cost
+            updateResources();
+            updateVillagers();
+        } else {
+            alert('Not enough food!');
+        }
     } else {
-        alert('Not enough food!');
+        alert('Not enough hut capacity! Build more huts.');
     }
 });
 
-// Assign woodcutter job
+// Assign woodcutter
 document.getElementById('assign-woodcutter').addEventListener('click', () => {
     if (unassignedVillagers > 0) {
         unassignedVillagers -= 1;
@@ -96,11 +108,22 @@ document.getElementById('assign-woodcutter').addEventListener('click', () => {
     }
 });
 
-// Assign miner job
+// Assign miner
 document.getElementById('assign-miner').addEventListener('click', () => {
     if (unassignedVillagers > 0) {
         unassignedVillagers -= 1;
         miners += 1;
+        updateVillagers();
+    } else {
+        alert('No unassigned villagers available!');
+    }
+});
+
+// Assign food gatherer
+document.getElementById('assign-food-gatherer').addEventListener('click', () => {
+    if (unassignedVillagers > 0) {
+        unassignedVillagers -= 1;
+        foodGatherers += 1;
         updateVillagers();
     } else {
         alert('No unassigned villagers available!');
