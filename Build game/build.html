@@ -18,26 +18,35 @@
                 <p>Wood: <span id="wood">0</span></p>
                 <p>Stone: <span id="stone">0</span></p>
                 <p>Food: <span id="food">10</span></p>
+                <p>Ores: <span id="ores">0</span></p>
+                <p>Planks: <span id="planks">0</span></p>
             </section>
 
             <section id="population">
                 <h2>Population</h2>
                 <p>Villagers: <span id="villagers">0</span> / <span id="max-villagers">0</span></p>
-                <button onclick="buyVillager()">Hire Villager (5 Food)</button>
+                <p>Idle Villagers: <span id="idleVillagers">0</span></p>
+                <button id="hireVillagerButton">Hire Villager (5 Food)</button>
             </section>
 
             <section id="actions">
-                <h2>Actions</h2>
-                <button onclick="gatherResource('wood')">Gather Wood</button>
-                <button onclick="gatherResource('stone')">Gather Stone</button>
-                <button onclick="gatherResource('food')">Gather Food</button>
+                <h2>Assign Jobs</h2>
+                <button id="assignWoodButton">Assign to Gather Wood</button>
+                <button id="assignStoneButton">Assign to Gather Stone</button>
+                <button id="assignFoodButton">Assign to Gather Food</button>
             </section>
 
             <section id="buildings">
                 <h2>Buildings</h2>
-                <button onclick="build('house')">Build House (50 Wood, 30 Stone)</button>
-                <button onclick="build('lumberMill')">Build Lumber Mill (100 Wood, 50 Stone)</button>
-                <button onclick="build('quarry')">Build Quarry (150 Wood, 100 Stone)</button>
+                <button id="buildHouseButton">Build House (50 Wood, 30 Stone)</button>
+                <button id="buildLumberMillButton">Build Lumber Mill (100 Wood, 50 Stone)</button>
+                <button id="buildQuarryButton">Build Quarry (150 Wood, 100 Stone)</button>
+            </section>
+
+            <section id="tools">
+                <h2>Tools</h2>
+                <button id="buyPickaxeButton">Buy Pickaxe (20 Wood, 10 Stone)</button>
+                <button id="buySawButton">Buy Saw (20 Wood, 10 Stone)</button>
             </section>
         </main>
         <footer>
