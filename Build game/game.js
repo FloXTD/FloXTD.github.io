@@ -58,7 +58,7 @@ document.getElementById('collect-stone').addEventListener('click', () => {
 
 // Gather food
 document.getElementById('collect-food').addEventListener('click', () => {
-    food += 1 + foodGatherers; // Food Gatherers add extra food
+    food += 1 + foodGatherers; // Food gatherers add extra food
     updateResources();
 });
 
@@ -68,8 +68,8 @@ document.getElementById('build-hut').addEventListener('click', () => {
         wood -= hutCost.wood;
         stone -= hutCost.stone;
         huts += 1;
-        hutCost.wood += 5; // Increase hut cost
-        hutCost.stone += 5;
+        hutCost.wood += 5; // Increase hut wood cost
+        hutCost.stone += 5; // Increase hut stone cost
         updateResources();
         updateBuildings();
         updateVillagers();
@@ -86,7 +86,7 @@ document.getElementById('buy-villager').addEventListener('click', () => {
             food -= villagerCost;
             villagers += 1;
             unassignedVillagers += 1;
-            villagerCost += 5; // Increase villager cost
+            villagerCost += 5; // Increase villager food cost
             updateResources();
             updateVillagers();
         } else {
