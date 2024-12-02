@@ -160,6 +160,16 @@ document.getElementById('buildCookerButton').addEventListener('click', function(
     }
 });
 
+document.getElementById('buildHouseButton').addEventListener('click', function() {
+    if (wood >= 30 && stone >= 15) {
+        wood -= 30;
+        stone -= 15;
+        villagers += 1;
+        maxVillagers += 2; // Increase the number of max villagers
+        updateResources();
+    }
+});
+
 // Ore cooking
 document.getElementById('cookOreButton').addEventListener('click', function() {
     cookOre();
