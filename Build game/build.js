@@ -1,121 +1,169 @@
-// Game state
-const gameState = {
-    resources: { wood: 0, stone: 0, food: 10, ores: 0, planks: 0, iron: 0, copper: 0, gold: 0 },
-    villagers: 0,
-    maxVillagers: 0,
-    idleVillagers: 0,
-    villagerJobs: { wood: 0, stone: 0, food: 0 },
-    buildings: { houses: 0, lumberMill: false, quarry: false, smelter: false },
-    tools: { pickaxe: false, saw: false },
-    gatheredItems: 0, // Tracks how many items have been gathered
-    gatherCooldown: { wood: false, stone: false, food: false },
-};
+// Global variables for resources and cooldowns
+let wood = 0, stone = 0, food = 10, ores = 0, planks = 0;
+let iron = 0, copper = 0, gold = 0;
+let villagers = 0, idleVillagers = 0, maxVillagers = 0;
+let woodCooldown = 0, stoneCooldown = 0, foodCooldown = 0;
+let cookingCooldown = 0;
 
-// Update the UI with current game state
-function updateUI() {
-    document.getElementById("wood").textContent = gameState.resources.wood;
-    document.getElementById("stone").textContent = gameState.resources.stone;
-    document.getElementById("food").textContent = gameState.resources.food;
-    document.getElementById("ores").textContent = gameState.resources.ores;
-    document.getElementById("planks").textContent = gameState.resources.planks;
-    document.getElementById("iron").textContent = gameState.resources.iron;
-    document.getElementById("copper").textContent = gameState.resources.copper;
-    document.getElementById("gold").textContent = gameState.resources.gold;
-    document.getElementById("villagers").textContent = gameState.villagers;
-    document.getElementById("max-villagers").textContent = gameState.maxVillagers;
-    document.getElementById("idleVillagers").textContent = gameState.idleVillagers;
+// Update displayed resources
+function updateResources() {
+    document.getElementById('wood').innerText = wood;
+    document.getElementById('stone').innerText = stone;
+    document.getElementById('food').innerText = food;
+    document.getElementById('ores').innerText = ores;
+    document.getElementById('planks').innerText = planks;
+    document.getElementById('iron').innerText = iron;
+    document.getElementById('copper').innerText = copper;
+    document.getElementById('gold').innerText = gold;
+    document.getElementById('villagers').innerText = villagers;
+    document.getElementById('max-villagers').innerText = maxVillagers;
+    document.getElementById('idleVillagers').innerText = idleVillagers;
 }
 
-// Add a log message to the log section
-function logMessage(message) {
-    const log = document.getElementById("log-entries");
-    const entry = document.createElement("li");
-    entry.textContent = message;
-    log.appendChild(entry);
-}
-
-// Manual gathering with cooldown
-function gatherManually(resource) {
-    if (gameState.gatherCooldown[resource]) {
-        logMessage(`You need to wait before gathering ${resource} again!`);
-        return;
-    }
-
-    const amount = Math.floor(Math.random() * 6) + 5; // Random between 5 and 10
-    gameState.resources[resource] += amount;
-    gameState.gatheredItems += amount;
-    logMessage(`You gathered ${amount} ${resource}.`);
-    checkFoodConsumption();
-
-    // Start cooldown
-    gameState.gatherCooldown[resource] = true;
-    startCooldown(resource, 7000); // 7 seconds cooldown
-
-    updateUI();
-}
-
-// Start a cooldown for a resource
-function startCooldown(resource, duration) {
-    const progressBar = document.getElementById(`${resource}-progress`);
-    progressBar.style.width = "0%";
-    progressBar.style.display = "block";
-
-    let elapsed = 0;
-    const interval = 100; // Update every 100ms
-    const timer = setInterval(() => {
-        elapsed += interval;
-        const percentage = (elapsed / duration) * 100;
-        progressBar.style.width = `${percentage}%`;
-
-        if (elapsed >= duration) {
-            clearInterval(timer);
-            gameState.gatherCooldown[resource] = false;
-            progressBar.style.display = "none";
-            logMessage(`You can now gather ${resource} again.`);
+// Function to gather resources manually
+function gatherResource(type) {
+    if (type === 'wood') {
+        if (woodCooldown === 0) {
+            let gatheredWood = Math.floor(Math.random() * 6) + 5; // Gather 5-10 wood
+            wood += gatheredWood;
+            updateResources();
+            showCooldown('wood', 7);
         }
-    }, interval);
-}
-
-// Check if food needs to be consumed
-function checkFoodConsumption() {
-    if (gameState.gatheredItems >= 10) {
-        const totalFoodNeeded = gameState.villagers + 1;
-        if (gameState.resources.food >= totalFoodNeeded) {
-            gameState.resources.food -= totalFoodNeeded;
-            logMessage(`Food consumed: ${totalFoodNeeded}`);
-        } else {
-            logMessage("Not enough food! Villagers starve.");
+    } else if (type === 'stone') {
+        if (stoneCooldown === 0) {
+            let gatheredStone = Math.floor(Math.random() * 6) + 5; // Gather 5-10 stone
+            stone += gatheredStone;
+            updateResources();
+            showCooldown('stone', 7);
         }
-        gameState.gatheredItems = 0; // Reset gathered item count
+    } else if (type === 'food') {
+        if (foodCooldown === 0) {
+            let gatheredFood = Math.floor(Math.random() * 3) + 1; // Gather 1-3 food
+            food += gatheredFood;
+            updateResources();
+            showCooldown('food', 7);
+        }
     }
 }
 
-// Villagers gather resources automatically
-function gatherResources() {
-    gameState.resources.wood += Math.floor(gameState.villagerJobs.wood / 2);
-    gameState.resources.stone += Math.floor(gameState.villagerJobs.stone / 2);
-    gameState.resources.food += Math.floor(gameState.villagerJobs.food / 2);
+// Function to display cooldown progress bar
+function showCooldown(type, time) {
+    let progressBar = document.getElementById(`${type}-progress`);
+    let progressContainer = progressBar.parentElement;
+    progressContainer.style.display = 'block';
 
-    if (gameState.buildings.quarry && gameState.tools.pickaxe) {
-        gameState.resources.ores += Math.floor(gameState.villagerJobs.stone / 4);
-    }
+    let timeRemaining = time;
+    let interval = setInterval(function() {
+        timeRemaining--;
+        progressBar.style.width = `${(1 - timeRemaining / time) * 100}%`;
+        if (timeRemaining <= 0) {
+            clearInterval(interval);
+            progressContainer.style.display = 'none';
+            if (type === 'wood') woodCooldown = 0;
+            if (type === 'stone') stoneCooldown = 0;
+            if (type === 'food') foodCooldown = 0;
+        }
+    }, 1000);
 
-    if (gameState.buildings.lumberMill && gameState.tools.saw) {
-        gameState.resources.planks += Math.floor(gameState.villagerJobs.wood / 4);
-    }
-
-    gameState.gatheredItems++;
-    checkFoodConsumption();
-    updateUI();
+    if (type === 'wood') woodCooldown = time;
+    if (type === 'stone') stoneCooldown = time;
+    if (type === 'food') foodCooldown = time;
 }
 
-// Event listeners
-document.getElementById("gatherWoodButton").addEventListener("click", () => gatherManually("wood"));
-document.getElementById("gatherStoneButton").addEventListener("click", () => gatherManually("stone"));
-document.getElementById("gatherFoodButton").addEventListener("click", () => gatherManually("food"));
+// Assign villagers to gather resources
+function assignVillagerToGather(type) {
+    if (idleVillagers > 0) {
+        if (type === 'wood') {
+            idleVillagers--;
+            let gatheredWood = Math.floor(Math.random() * 6) + 5; // Gather 5-10 wood
+            wood += gatheredWood;
+            updateResources();
+        } else if (type === 'stone') {
+            idleVillagers--;
+            let gatheredStone = Math.floor(Math.random() * 6) + 5; // Gather 5-10 stone
+            stone += gatheredStone;
+            updateResources();
+        } else if (type === 'food') {
+            idleVillagers--;
+            let gatheredFood = Math.floor(Math.random() * 3) + 1; // Gather 1-3 food
+            food += gatheredFood;
+            updateResources();
+        }
+    }
+}
 
-// Automated resource gathering every 2 seconds (slower pace)
-setInterval(gatherResources, 2000);
+// Ore cooking function
+function cookOre() {
+    if (ores > 0 && planks >= 2) {
+        ores--;
+        planks -= 2;
+        updateResources();
+        showCooldown('cooking', 5);
 
-// Initial UI update
-updateUI();
+        // Random chance to get iron, copper, or gold
+        setTimeout(function() {
+            let result = Math.random();
+            if (result < 0.33) iron++;
+            else if (result < 0.66) copper++;
+            else gold++;
+            updateResources();
+        }, 5000);
+    }
+}
+
+// Event listeners for buttons
+document.getElementById('gatherWoodButton').addEventListener('click', function() {
+    gatherResource('wood');
+});
+document.getElementById('gatherStoneButton').addEventListener('click', function() {
+    gatherResource('stone');
+});
+document.getElementById('gatherFoodButton').addEventListener('click', function() {
+    gatherResource('food');
+});
+
+// Assign villagers to gather resources
+document.getElementById('assignVillagerWoodButton').addEventListener('click', function() {
+    assignVillagerToGather('wood');
+});
+document.getElementById('assignVillagerStoneButton').addEventListener('click', function() {
+    assignVillagerToGather('stone');
+});
+document.getElementById('assignVillagerFoodButton').addEventListener('click', function() {
+    assignVillagerToGather('food');
+});
+
+// Build buildings
+document.getElementById('buyQuarryButton').addEventListener('click', function() {
+    if (wood >= 10 && stone >= 10) {
+        wood -= 10;
+        stone -= 10;
+        ores += 5; // You can now gather ores
+        updateResources();
+    }
+});
+
+document.getElementById('buyLumberMillButton').addEventListener('click', function() {
+    if (wood >= 15 && stone >= 15) {
+        wood -= 15;
+        stone -= 15;
+        planks += 5; // You can now gather planks
+        updateResources();
+    }
+});
+
+document.getElementById('buildCookerButton').addEventListener('click', function() {
+    if (wood >= 20 && stone >= 10) {
+        wood -= 20;
+        stone -= 10;
+        updateResources();
+    }
+});
+
+// Ore cooking
+document.getElementById('cookOreButton').addEventListener('click', function() {
+    cookOre();
+});
+
+// Initialize game
+updateResources();
