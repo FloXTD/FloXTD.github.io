@@ -62,9 +62,9 @@ document.getElementById('collect-food').addEventListener('click', () => {
 
 // Automatically gather resources
 function gatherResources() {
-    wood += woodcutters;
-    stone += miners;
-    food += foodGatherers;
+    wood += woodcutters; // 1 resource per second per woodcutter
+    stone += miners; // 1 resource per second per miner
+    food += foodGatherers; // 1 resource per second per food gatherer
     updateResources();
 }
 
