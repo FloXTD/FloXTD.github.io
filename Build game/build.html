@@ -12,7 +12,6 @@
             border: 1px solid #ccc;
             height: 20px;
             margin: 5px 0;
-            display: none; /* Initially hidden */
         }
 
         .progress-bar {
@@ -22,7 +21,7 @@
             transition: width 0.1s linear;
         }
 
-        /* Some basic styling for the buttons and display */
+        /* Button styling */
         .button {
             padding: 10px;
             margin: 5px;
@@ -36,7 +35,11 @@
             background-color: #45a049;
         }
 
-        /* Display panel */
+        /* Styling for resource display */
+        h2, h3 {
+            margin-top: 20px;
+        }
+
         #log-entries {
             list-style-type: none;
             padding-left: 0;
@@ -45,12 +48,26 @@
         #log-entries li {
             margin-bottom: 5px;
         }
+
+        .resources {
+            margin-top: 20px;
+        }
+
+        /* Building and Villagers Section */
+        .buildings, .villagers {
+            margin-top: 20px;
+        }
+
+        /* Resource Input for Cooking */
+        .ore-cooking-container {
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
 
     <h1>Village Building Game</h1>
-
+    
     <div>
         <button id="gatherWoodButton" class="button">Gather Wood</button>
         <div class="progress-container">
@@ -72,21 +89,43 @@
         </div>
     </div>
 
-    <h2>Resources</h2>
-    <p>Wood: <span id="wood">0</span></p>
-    <p>Stone: <span id="stone">0</span></p>
-    <p>Food: <span id="food">10</span></p>
-    <p>Ores: <span id="ores">0</span></p>
-    <p>Planks: <span id="planks">0</span></p>
-    <p>Iron: <span id="iron">0</span></p>
-    <p>Copper: <span id="copper">0</span></p>
-    <p>Gold: <span id="gold">0</span></p>
+    <div class="buildings">
+        <h2>Buildings</h2>
+        <button id="buyQuarryButton" class="button">Buy Quarry (Costs 10 Wood, 10 Stone)</button>
+        <button id="buyLumberMillButton" class="button">Buy Lumber Mill (Costs 15 Wood, 15 Stone)</button>
+        <button id="buildCookerButton" class="button">Build Ore Cooker (Costs 20 Wood, 10 Stone)</button>
+    </div>
+
+    <div class="villagers">
+        <h3>Villagers: <span id="villagers">0</span> / <span id="max-villagers">0</span> Idle: <span id="idleVillagers">0</span></h3>
+        <button id="assignVillagerWoodButton" class="button">Assign Villager to Gather Wood</button>
+        <button id="assignVillagerStoneButton" class="button">Assign Villager to Gather Stone</button>
+        <button id="assignVillagerFoodButton" class="button">Assign Villager to Gather Food</button>
+    </div>
     
-    <h3>Villagers: <span id="villagers">0</span> / <span id="max-villagers">0</span> Idle: <span id="idleVillagers">0</span></h3>
-    
+    <div class="resources">
+        <h2>Resources</h2>
+        <p>Wood: <span id="wood">0</span></p>
+        <p>Stone: <span id="stone">0</span></p>
+        <p>Food: <span id="food">10</span></p>
+        <p>Ores: <span id="ores">0</span></p>
+        <p>Planks: <span id="planks">0</span></p>
+        <p>Iron: <span id="iron">0</span></p>
+        <p>Copper: <span id="copper">0</span></p>
+        <p>Gold: <span id="gold">0</span></p>
+    </div>
+
+    <div class="ore-cooking-container">
+        <h3>Cook Ores (Costs 2 Planks per Ore)</h3>
+        <button id="cookOreButton" class="button">Cook Ore</button>
+        <div class="progress-container">
+            <div id="cooking-progress" class="progress-bar"></div>
+        </div>
+    </div>
+
     <h3>Logs</h3>
     <ul id="log-entries"></ul>
 
-    <script src="build.js"></script>
+    <script src="game.js"></script>
 </body>
 </html>
