@@ -19,6 +19,42 @@ let foodGatherers = 0;
 let hutCost = { wood: 10, stone: 5 };
 let villagerCost = 15;
 
+// Load saved game data
+function loadGame() {
+    const savedGame = JSON.parse(localStorage.getItem('villageBuilderSave'));
+    if (savedGame) {
+        wood = savedGame.wood || 0;
+        stone = savedGame.stone || 0;
+        food = savedGame.food || 0;
+        huts = savedGame.huts || 0;
+        villagers = savedGame.villagers || 0;
+        unassignedVillagers = savedGame.unassignedVillagers || 0;
+        woodcutters = savedGame.woodcutters || 0;
+        miners = savedGame.miners || 0;
+        foodGatherers = savedGame.foodGatherers || 0;
+        hutCost = savedGame.hutCost || { wood: 10, stone: 5 };
+        villagerCost = savedGame.villagerCost || 15;
+    }
+}
+
+// Save game data
+function saveGame() {
+    const gameData = {
+        wood,
+        stone,
+        food,
+        huts,
+        villagers,
+        unassignedVillagers,
+        woodcutters,
+        miners,
+        foodGatherers,
+        hutCost,
+        villagerCost,
+    };
+    localStorage.setItem('villageBuilderSave', JSON.stringify(gameData));
+}
+
 // Update resources display
 function updateResources() {
     document.getElementById('wood').textContent = wood;
@@ -48,16 +84,19 @@ function updateVillagers() {
 document.getElementById('collect-wood').addEventListener('click', () => {
     wood += 1;
     updateResources();
+    saveGame();
 });
 
 document.getElementById('collect-stone').addEventListener('click', () => {
     stone += 1;
     updateResources();
+    saveGame();
 });
 
 document.getElementById('collect-food').addEventListener('click', () => {
     food += 1;
     updateResources();
+    saveGame();
 });
 
 // Automatically gather resources
@@ -66,6 +105,7 @@ function gatherResources() {
     stone += miners; // 1 resource per second per miner
     food += foodGatherers; // 1 resource per second per food gatherer
     updateResources();
+    saveGame();
 }
 
 // Build hut
@@ -79,6 +119,7 @@ document.getElementById('build-hut').addEventListener('click', () => {
         updateResources();
         updateBuildings();
         updateVillagers();
+        saveGame();
     } else {
         alert('Not enough resources!');
     }
@@ -95,6 +136,7 @@ document.getElementById('buy-villager').addEventListener('click', () => {
             villagerCost += 5;
             updateResources();
             updateVillagers();
+            saveGame();
         } else {
             alert('Not enough food!');
         }
@@ -111,6 +153,7 @@ function assignJob(job) {
         if (job === 'miner') miners += 1;
         if (job === 'foodGatherer') foodGatherers += 1;
         updateVillagers();
+        saveGame();
     } else {
         alert('No unassigned villagers available!');
     }
@@ -122,6 +165,7 @@ function unassignJob(job) {
     if (job === 'foodGatherer' && foodGatherers > 0) foodGatherers -= 1;
     unassignedVillagers += 1;
     updateVillagers();
+    saveGame();
 }
 
 document.getElementById('assign-woodcutter').addEventListener('click', () => assignJob('woodcutter'));
@@ -135,3 +179,9 @@ document.getElementById('unassign-food-gatherer').addEventListener('click', () =
 
 // Automatic resource collection interval
 setInterval(gatherResources, 1000);
+
+// Load the saved game when the page loads
+loadGame();
+updateResources();
+updateBuildings();
+updateVillagers();
