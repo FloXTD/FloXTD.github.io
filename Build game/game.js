@@ -1,6 +1,7 @@
 // Resources
 let wood = 0;
 let stone = 0;
+let food = 0;
 
 // Buildings
 let huts = 0;
@@ -17,6 +18,7 @@ let miners = 0;
 function updateResources() {
     document.getElementById('wood').textContent = wood;
     document.getElementById('stone').textContent = stone;
+    document.getElementById('food').textContent = food;
 }
 
 // Update buildings display
@@ -44,6 +46,12 @@ document.getElementById('collect-stone').addEventListener('click', () => {
     updateResources();
 });
 
+// Gather food
+document.getElementById('collect-food').addEventListener('click', () => {
+    food += 1; // Increase food count
+    updateResources();
+});
+
 // Build hut
 document.getElementById('build-hut').addEventListener('click', () => {
     const woodCost = 10;
@@ -54,13 +62,26 @@ document.getElementById('build-hut').addEventListener('click', () => {
         wood -= woodCost;  // Deduct wood cost
         stone -= stoneCost;  // Deduct stone cost
         huts += 1;  // Increase hut count
-        villagers += 1;  // Add a new villager
-        unassignedVillagers += 1; // New villager is unassigned
         updateResources();
         updateBuildings();
-        updateVillagers();
     } else {
         alert('Not enough resources!');
+    }
+});
+
+// Buy villager
+document.getElementById('buy-villager').addEventListener('click', () => {
+    const foodCost = 15;
+
+    // Check if enough food
+    if (food >= foodCost) {
+        food -= foodCost;  // Deduct food cost
+        villagers += 1;  // Increase villager count
+        unassignedVillagers += 1; // New villager is unassigned
+        updateResources();
+        updateVillagers();
+    } else {
+        alert('Not enough food!');
     }
 });
 
