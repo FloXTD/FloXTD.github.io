@@ -20,13 +20,13 @@ const classes = {
 
 // NPC Dialogue and Start of the Game
 function startCharacterCreation() {
-    document.getElementById("npc-dialogue").innerText = "The stranger looks you up and down. 'Ah, a newcomer... Tell me, who are you?'";
+    document.getElementById("npc-dialogue").innerText = "A villager approaches you, his face pale with worry. 'Please, stranger... Can you help me? My son went into the woods and hasn't returned. I fear the monsters... He's probably gone by now...'";
     document.querySelector("button").style.display = "none"; // Hide Talk to NPC button
 
     setTimeout(function () {
-        document.getElementById("npc-dialogue").innerText = "I can see the village is in danger. But before you go, tell me... who are you?";
+        document.getElementById("npc-dialogue").innerText = "The villager's voice cracks as he continues, 'Please, find him... You seem capable.'";
         document.getElementById("setup-section").style.display = "block"; // Show character creation section
-    }, 3000);
+    }, 5000);
 }
 
 // Start the game with player choices
@@ -48,6 +48,14 @@ function startGame() {
     document.getElementById("setup-section").style.display = "none";
     document.getElementById("game-section").style.display = "block";
     updateStats();
+
+    setTimeout(function () {
+        document.getElementById("npc-dialogue").innerText = "'Thank you... You must go quickly. The village will be safe for now. But please, do what you can for my son.'";
+        setTimeout(function () {
+            document.getElementById("npc-dialogue").innerText = "Suddenly, a loud roar shakes the ground! The village is under attack!";
+            startBattleSequence();
+        }, 3000);
+    }, 2000);
 }
 
 // Update player's and monster's stats on the page
@@ -63,6 +71,12 @@ function updateStats() {
 
     document.getElementById("monster-name").innerText = monster.name;
     document.getElementById("monster-health").innerText = monster.health;
+}
+
+// Battle Sequence Start
+function startBattleSequence() {
+    // Show a button to begin the battle
+    document.getElementById("battle-start-button").style.display = "inline-block";
 }
 
 // Attack function
