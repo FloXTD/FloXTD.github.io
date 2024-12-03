@@ -53,7 +53,13 @@ function startGame() {
         document.getElementById("npc-dialogue").innerText = "'Thank you... You must go quickly. The village will be safe for now. But please, do what you can for my son.'";
         setTimeout(function () {
             document.getElementById("npc-dialogue").innerText = "Suddenly, a loud roar shakes the ground! The village is under attack!";
-            startBattleSequence();
+            setTimeout(function () {
+                document.getElementById("npc-dialogue").innerText = "The villagers scream in panic as they rush to defend their homes. People are running, shouting, and trying to barricade themselves in their houses. You can see fear in their eyes as the attack begins.";
+                setTimeout(function () {
+                    document.getElementById("npc-dialogue").innerText = "You must act quickly! The monsters are upon us!";
+                    startBattleSequence();
+                }, 4000);
+            }, 3000);
         }, 3000);
     }, 2000);
 }
