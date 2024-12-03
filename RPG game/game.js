@@ -11,23 +11,30 @@ let monster = {
 const races = { /* Same as before */ };
 const classes = { /* Same as before */ };
 
-// Game setup
+//Starts the game
 function startGame() {
     const race = document.getElementById("race-select").value;
     const name = document.getElementById("name-input").value.trim() || "Player";
     const playerClass = document.getElementById("class-select").value;
 
-    player = { ...races[race], name, race, class: playerClass, mana: races[race].intelligence, inventory: [] };
-    const classData = classes[playerClass];
-    Object.keys(classData).forEach(key => {
-        if (key.endsWith("Bonus")) player[key.replace("Bonus", "")] += classData[key];
-    });
+    // Configure player stats
+    player = { ...races[race], name, race, class: playerClass, mana: races[race].intelligence };
 
+    // Apply class bonuses
+    const classData = classes[playerClass];
+    player.health += classData.healthBonus || 0;
+    player.strength += classData.strengthBonus || 0;
+    player.stamina += classData.staminaBonus || 0;
+    player.intelligence += classData.intelligenceBonus || 0;
     player.weapon = classData.weapon;
+
+    // Update UI
     document.getElementById("setup-section").style.display = "none";
     document.getElementById("game-section").style.display = "block";
     updateStats();
+    console.log("Game started with player:", player);
 }
+
 
 // Inventory functions
 function addToInventory(item) {
