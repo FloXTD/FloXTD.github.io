@@ -3,128 +3,46 @@ body {
     background-color: #f4f4f4;
     margin: 0;
     padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
     text-align: center;
+}
+
+#story-container {
+    background-color: #fafafa;
+    padding: 20px;
+    border-bottom: 2px solid #ddd;
+}
+
+#story-text {
+    font-size: 18px;
+    margin-bottom: 20px;
 }
 
 #game-container {
     display: flex;
     justify-content: space-between;
-    max-width: 1000px;
-    margin: auto;
-    background-color: #fff;
     padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    width: 100%;
-}
-
-#story-container {
-    flex: 2;
-    margin-right: 20px;
-}
-
-#character-container {
-    flex: 1;
-    background-color: #f9f9f9;
-    padding: 10px;
-    border-radius: 10px;
-    border: 1px solid #ddd;
-}
-
-h1, h2 {
-    color: #333;
-}
-
-#npc-dialogue {
-    margin-bottom: 20px;
-}
-
-#player-info, #monster-info {
-    margin-bottom: 20px;
-}
-
-#battle-log {
+    background-color: #fff;
     margin-top: 20px;
-    max-height: 200px;
-    overflow-y: auto;
-    border-top: 2px solid #ddd;
-    padding-top: 10px;
 }
 
-#battle-entries {
-    list-style-type: none;
-    padding: 0;
+#stats, #inventory, #combat-actions {
+    width: 30%;
+    padding: 10px;
+    background-color: #eee;
+    border-radius: 5px;
 }
 
-#battle-entries li {
-    margin-bottom: 10px;
-}
-
-.button {
+button {
     padding: 10px 20px;
     margin: 5px;
     cursor: pointer;
-    border-radius: 5px;
     background-color: #4CAF50;
     color: white;
     border: none;
+    border-radius: 5px;
     transition: background-color 0.3s;
 }
 
-.button:hover {
+button:hover {
     background-color: #45a049;
-}
-
-#start-button {
-    padding: 10px 20px;
-    margin: 5px;
-    cursor: pointer;
-    border-radius: 5px;
-    background-color: #007BFF;
-    color: white;
-    border: none;
-    font-size: 18px;
-}
-
-#start-button:hover {
-    background-color: #0056b3;
-}
-
-#action-buttons {
-    display: flex;
-    justify-content: space-around;
-}
-
-#character-creation {
-    display: flex;
-    flex-direction: column;
-    margin-top: 20px;
-}
-
-#character-creation select, #character-creation input {
-    padding: 10px;
-    margin: 5px;
-    border-radius: 5px;
-    border: 1px solid #ddd;
-}
-
-#battle-log {
-    margin-top: 20px;
-    max-height: 200px;
-    overflow-y: auto;
-    border-top: 2px solid #ddd;
-    padding-top: 10px;
-}
-
-#battle-entries {
-    list-style-type: none;
-    padding: 0;
-}
-
-#battle-entries li {
-    margin-bottom: 10px;
 }
