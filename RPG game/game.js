@@ -54,12 +54,18 @@ function startGame() {
         setTimeout(function () {
             document.getElementById("npc-dialogue").innerText = "Suddenly, a loud roar shakes the ground! The village is under attack!";
             setTimeout(function () {
-                document.getElementById("npc-dialogue").innerText = "The villagers scream in panic as they rush to defend their homes. People are running, shouting, and trying to barricade themselves in their houses. You can see fear in their eyes as the attack begins.";
+                document.getElementById("npc-dialogue").innerText = "As the sound of the roar echoes, you catch a glimpse of a dark figure lurking in the distance, a massive, corrupt creature that seems to radiate malice.";
                 setTimeout(function () {
-                    document.getElementById("npc-dialogue").innerText = "You must act quickly! The monsters are upon us!";
-                    startBattleSequence();
-                }, 4000);
-            }, 3000);
+                    document.getElementById("npc-dialogue").innerText = "The villagers scream in panic as they rush to defend their homes. People are running, shouting, and trying to barricade themselves in their houses. You can see fear in their eyes as the attack begins.";
+                    setTimeout(function () {
+                        document.getElementById("npc-dialogue").innerText = "Before you can react, a goblin leaps from the shadows, knocking your weapon from your hand. You must act quickly!";
+                        setTimeout(function () {
+                            // Start battle after this sequence
+                            startBattleSequenceWithoutWeapon();
+                        }, 3000);
+                    }, 4000);
+                }, 3000);
+            }, 4000);
         }, 3000);
     }, 2000);
 }
@@ -79,19 +85,22 @@ function updateStats() {
     document.getElementById("monster-health").innerText = monster.health;
 }
 
-// Battle Sequence Start
-function startBattleSequence() {
-    // Show a button to begin the battle
+// Battle Sequence Start (Without Weapon)
+function startBattleSequenceWithoutWeapon() {
+    // Hide the current dialogue and show the battle area
     document.getElementById("battle-start-button").style.display = "inline-block";
+    document.getElementById("action-buttons").style.display = "inline-block";
+    document.getElementById("npc-dialogue").style.display = "none";
+    logBattle("You are forced to fight the goblin with your bare hands.");
 }
 
-// Attack function
-function attack() {
+// Attack function (without weapon)
+function attackWithoutWeapon() {
     if (player.stamina >= 5) {
-        let damage = Math.floor(Math.random() * player.strength) + 1;
+        let damage = Math.floor(Math.random() * player.strength / 2) + 1; // Reduced damage without weapon
         monster.health -= damage;
         player.stamina -= 5;
-        logBattle(`${player.name} attacks with their ${player.weapon} for ${damage} damage!`);
+        logBattle(`${player.name} punches the goblin for ${damage} damage!`);
         checkMonsterHealth();
         monsterAttack();
     } else {
@@ -101,11 +110,11 @@ function attack() {
     updateStats();
 }
 
-// Run function
-function run() {
+// Defend/Run function (without weapon)
+function runWithoutWeapon() {
     if (player.stamina >= 20) {
         player.stamina -= 20;
-        logBattle(`${player.name} runs away!`);
+        logBattle(`${player.name} runs away from the goblin!`);
     } else {
         logBattle("Not enough stamina to run!");
     }
@@ -113,14 +122,14 @@ function run() {
     updateStats();
 }
 
-// Cast Spell function
-function castSpell() {
+// Cast Spell function (without weapon)
+function castSpellWithoutWeapon() {
     document.getElementById("action-buttons").style.display = "none";
     document.getElementById("spell-choice").style.display = "block";
 }
 
 // Fireball spell
-function castFireball() {
+function castFireballWithoutWeapon() {
     if (player.mana >= 25) {
         let damage = Math.floor(Math.random() * 30) + 10;
         monster.health -= damage;
@@ -134,7 +143,7 @@ function castFireball() {
 }
 
 // Lightning Strike spell
-function castLightningStrike() {
+function castLightningStrikeWithoutWeapon() {
     if (player.mana >= 40) {
         let damage = Math.floor(Math.random() * 50) + 20;
         monster.health -= damage;
@@ -172,6 +181,9 @@ function monsterAttack() {
 function checkMonsterHealth() {
     if (monster.health <= 0) {
         logBattle(`${monster.name} has been defeated.`);
+        logBattle("You recover your weapon!");
+        player.weapon = classes[player.class].weapon; // Get weapon back after killing the goblin
+        updateStats();
     }
 }
 
