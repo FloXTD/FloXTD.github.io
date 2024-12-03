@@ -45,11 +45,18 @@ function updateInventory() {
     });
 }
 
-// Admin panel
+// Admin panel toggle function
 function toggleAdmin() {
     const adminSection = document.getElementById("admin-section");
-    adminSection.style.display = adminSection.style.display === "none" ? "block" : "none";
+    if (adminSection.style.display === "none" || !adminSection.style.display) {
+        adminSection.style.display = "block"; // Show admin panel
+        console.log("Admin panel opened.");
+    } else {
+        adminSection.style.display = "none"; // Hide admin panel
+        console.log("Admin panel closed.");
+    }
 }
+
 
 function resetGame() {
     player = {};
