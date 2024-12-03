@@ -10,6 +10,7 @@ let gameState = {
     },
 };
 
+// Array of story events
 const storyEvents = [
     "Welcome to the world of Eldoria. Your journey begins in a small village.",
     "A villager approaches you, looking distressed. 'Please help me find my son! He wandered into the forest...'",
@@ -19,6 +20,7 @@ const storyEvents = [
     "It's time to fight the goblin barehanded!"
 ];
 
+// Function to progress through the story
 function nextStory() {
     const storyText = document.getElementById("story-text");
     const storyOptions = document.getElementById("story-options");
@@ -39,6 +41,7 @@ function nextStory() {
     }
 }
 
+// Function to handle character creation
 function chooseCharacter() {
     const name = prompt("Enter your name:", "Hero");
     const race = prompt("Choose your race (Human, Elf, Orc):", "Human");
@@ -53,6 +56,7 @@ function chooseCharacter() {
     nextStory();
 }
 
+// Function to start combat
 function startCombat() {
     document.getElementById("story-container").style.display = "none";
     document.getElementById("game-container").style.display = "flex";
@@ -60,6 +64,7 @@ function startCombat() {
     updateStats();
 }
 
+// Function to update player stats in the stats section
 function updateStats() {
     const { name, health, mana, stamina, inventory } = gameState.player;
 
@@ -72,6 +77,7 @@ function updateStats() {
     inventoryList.innerHTML = inventory.map((item) => `<li>${item}</li>`).join("") || "<li>Empty</li>";
 }
 
+// Combat functions
 function attack() {
     alert("You attack the goblin barehanded!");
     gameState.player.health -= 10; // Goblin counter-attack
