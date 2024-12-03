@@ -11,16 +11,17 @@ let monster = {
 const races = { /* Same as before */ };
 const classes = { /* Same as before */ };
 
-//Starts the game
 function startGame() {
+    alert("Start Game button clicked!"); // Step 1
     const race = document.getElementById("race-select").value;
+    alert(`Race selected: ${race}`); // Step 2
     const name = document.getElementById("name-input").value.trim() || "Player";
+    alert(`Name entered: ${name}`); // Step 3
     const playerClass = document.getElementById("class-select").value;
+    alert(`Class selected: ${playerClass}`); // Step 4
 
-    // Configure player stats
     player = { ...races[race], name, race, class: playerClass, mana: races[race].intelligence };
 
-    // Apply class bonuses
     const classData = classes[playerClass];
     player.health += classData.healthBonus || 0;
     player.strength += classData.strengthBonus || 0;
@@ -28,12 +29,13 @@ function startGame() {
     player.intelligence += classData.intelligenceBonus || 0;
     player.weapon = classData.weapon;
 
-    // Update UI
+    alert(`Player initialized: ${JSON.stringify(player)}`); // Final check
+
     document.getElementById("setup-section").style.display = "none";
     document.getElementById("game-section").style.display = "block";
     updateStats();
-    console.log("Game started with player:", player);
 }
+
 
 
 // Inventory functions
