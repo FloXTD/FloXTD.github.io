@@ -49,6 +49,11 @@
                 <p>Intelligence: <span id="player-intelligence">100</span></p>
             </div>
 
+            <div id="inventory-section">
+                <h2>Inventory</h2>
+                <ul id="inventory"></ul>
+            </div>
+
             <div id="monster-info">
                 <h2>Monster Info</h2>
                 <p>Name: <span id="monster-name">Goblin</span></p>
@@ -67,11 +72,14 @@
             </div>
         </div>
 
-        <div id="spell-choice" style="display: none;">
-            <h2>Choose a Spell</h2>
-            <button class="button" onclick="castFireball()">Fireball (25 Mana)</button>
-            <button class="button" onclick="castLightningStrike()">Lightning Strike (40 Mana)</button>
+        <div id="admin-section" style="display: none;">
+            <h2>Admin Controls</h2>
+            <button class="button" onclick="resetGame()">Reset Game</button>
+            <button class="button" onclick="changeRaceClass()">Change Race/Class</button>
+            <button class="button" onclick="spawnMonster()">Spawn Monster</button>
         </div>
+
+        <button class="button" onclick="toggleAdmin()">Admin</button>
     </div>
 
     <script src="game.js"></script>
