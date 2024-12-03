@@ -61,7 +61,7 @@ function startGame() {
                         document.getElementById("npc-dialogue").innerText = "Before you can react, a goblin leaps from the shadows, knocking your weapon from your hand. You must act quickly!";
                         setTimeout(function () {
                             // Start battle after this sequence
-                            startBattleSequenceWithoutWeapon();
+                            startBattleSequence();
                         }, 3000);
                     }, 4000);
                 }, 3000);
@@ -85,81 +85,50 @@ function updateStats() {
     document.getElementById("monster-health").innerText = monster.health;
 }
 
-// Battle Sequence Start (Without Weapon)
-function startBattleSequenceWithoutWeapon() {
+// Battle Sequence Start (check if player has weapon)
+function startBattleSequence() {
     // Hide the current dialogue and show the battle area
     document.getElementById("battle-start-button").style.display = "inline-block";
     document.getElementById("action-buttons").style.display = "inline-block";
     document.getElementById("npc-dialogue").style.display = "none";
-    logBattle("You are forced to fight the goblin with your bare hands.");
-}
+    logBattle("You are forced to fight the goblin.");
 
-// Attack function (without weapon)
-function attackWithoutWeapon() {
-    if (player.stamina >= 5) {
-        let damage = Math.floor(Math.random() * player.strength / 2) + 1; // Reduced damage without weapon
-        monster.health -= damage;
-        player.stamina -= 5;
-        logBattle(`${player.name} punches the goblin for ${damage} damage!`);
-        checkMonsterHealth();
-        monsterAttack();
-    } else {
-        logBattle("Not enough stamina to attack.");
+    // If the player doesn't have a weapon, set a flag for later
+    if (!player.weapon) {
+        logBattle("You don't have a weapon! You must fight with your bare hands.");
     }
-    restoreStamina();
-    updateStats();
 }
 
-// Defend/Run function (without weapon)
-function runWithoutWeapon() {
-    if (player.stamina >= 20) {
-        player.stamina -= 20;
-        logBattle(`${player.name} runs away from the goblin!`);
-    } else {
-        logBattle("Not enough stamina to run!");
+// Unified action function: attack, run, and cast spell (checks if player has a weapon)
+function action(actionType) {
+    if (actionType === "attack") {
+        if (player.weapon) {
+            let damage = Math.floor(Math.random() * player.strength) + 10; // Higher damage if weapon is available
+            monster.health -= damage;
+            logBattle(`${player.name} attacks with ${player.weapon} for ${damage} damage!`);
+        } else {
+            let damage = Math.floor(Math.random() * player.strength / 2) + 1; // Lower damage without weapon
+            monster.health -= damage;
+            logBattle(`${player.name} punches the goblin for ${damage} damage!`);
+        }
+    } else if (actionType === "run") {
+        if (player.stamina >= 20) {
+            player.stamina -= 20;
+            logBattle(`${player.name} runs away from the goblin!`);
+        } else {
+            logBattle("Not enough stamina to run!");
+        }
+    } else if (actionType === "cast") {
+        if (player.mana >= 25) {
+            let damage = Math.floor(Math.random() * 30) + 10;
+            monster.health -= damage;
+            player.mana -= 25;
+            logBattle(`${player.name} casts Fireball for ${damage} damage!`);
+        } else {
+            logBattle("Not enough mana to cast Fireball.");
+        }
     }
-    restoreStamina();
-    updateStats();
-}
-
-// Cast Spell function (without weapon)
-function castSpellWithoutWeapon() {
-    document.getElementById("action-buttons").style.display = "none";
-    document.getElementById("spell-choice").style.display = "block";
-}
-
-// Fireball spell
-function castFireballWithoutWeapon() {
-    if (player.mana >= 25) {
-        let damage = Math.floor(Math.random() * 30) + 10;
-        monster.health -= damage;
-        player.mana -= 25;
-        logBattle(`${player.name} casts Fireball for ${damage} damage!`);
-        checkMonsterHealth();
-    } else {
-        logBattle("Not enough mana for Fireball.");
-    }
-    endSpellCast();
-}
-
-// Lightning Strike spell
-function castLightningStrikeWithoutWeapon() {
-    if (player.mana >= 40) {
-        let damage = Math.floor(Math.random() * 50) + 20;
-        monster.health -= damage;
-        player.mana -= 40;
-        logBattle(`${player.name} casts Lightning Strike for ${damage} damage!`);
-        checkMonsterHealth();
-    } else {
-        logBattle("Not enough mana for Lightning Strike.");
-    }
-    endSpellCast();
-}
-
-// End spell cast
-function endSpellCast() {
-    document.getElementById("action-buttons").style.display = "block";
-    document.getElementById("spell-choice").style.display = "none";
+    checkMonsterHealth();
     monsterAttack();
     restoreStamina();
     updateStats();
@@ -199,3 +168,8 @@ function logBattle(message) {
     entry.textContent = message;
     log.appendChild(entry);
 }
+
+// Hook up button events
+document.getElementById("attack-btn").addEventListener("click", () => action("attack"));
+document.getElementById("run-btn").addEventListener("click", () => action("run"));
+document.getElementById("spell-btn").addEventListener("click", () => action("cast"));
