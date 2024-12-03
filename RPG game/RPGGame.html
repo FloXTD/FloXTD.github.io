@@ -3,144 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RPG Game</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            text-align: center;
-            margin: 0;
-            padding: 0;
-        }
-
-        #game-container {
-            max-width: 800px;
-            margin: auto;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        h1, h2 {
-            color: #333;
-        }
-
-        #setup-section, #game-section {
-            margin-bottom: 20px;
-        }
-
-        #npc-dialogue {
-            margin-bottom: 20px;
-        }
-
-        #player-info, #monster-info {
-            margin-bottom: 20px;
-        }
-
-        #battle-log {
-            margin-top: 20px;
-            max-height: 200px;
-            overflow-y: auto;
-            border-top: 2px solid #ddd;
-            padding-top: 10px;
-        }
-
-        #battle-entries {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        #battle-entries li {
-            margin-bottom: 10px;
-        }
-
-        .button {
-            padding: 10px 20px;
-            margin: 5px;
-            cursor: pointer;
-            border-radius: 5px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            transition: background-color 0.3s;
-        }
-
-        .button:hover {
-            background-color: #45a049;
-        }
-
-        #action-buttons {
-            display: none;
-        }
-
-        #battle-start-button {
-            display: none;
-        }
-    </style>
+    <title>Orinthia RPG Game</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/x-icon" href="https://img.icons8.com/?size=512&id=104704&format=png">
 </head>
 <body>
     <div id="game-container">
-        <h1>RPG Adventure</h1>
-        <div id="npc-dialogue"></div>
-        
-        <!-- Character creation section -->
-        <div id="setup-section">
-            <h2>Create Your Character</h2>
-            <label for="name-input">Enter your name:</label>
-            <input type="text" id="name-input" placeholder="Your name">
-            <br>
-            <label for="race-select">Choose your race:</label>
-            <select id="race-select">
-                <option value="human">Human</option>
-                <option value="orc">Orc</option>
-                <option value="elf">Elf</option>
-            </select>
-            <br>
-            <label for="class-select">Choose your class:</label>
-            <select id="class-select">
-                <option value="warrior">Warrior</option>
-                <option value="rogue">Rogue</option>
-                <option value="mage">Mage</option>
-            </select>
-            <br>
-            <button class="button" onclick="startGame()">Start Game</button>
+        <div id="story-container">
+            <h1>Welcome to Orinthia RPG Game</h1>
+            <div id="npc-dialogue">
+                <p>You are standing at the gates of the village, unsure of what lies ahead. The sky is overcast, and the air is thick with tension. A villager approaches you with a desperate look in his eyes.</p>
+            </div>
+            <button id="start-button" onclick="startGame()">Start Game</button>
         </div>
 
-        <!-- Game section (will be shown after game starts) -->
+        <div id="character-container" style="display: none;">
+            <h2>Character Creation</h2>
+            <div id="character-creation">
+                <label for="race-select">Choose your race:</label>
+                <select id="race-select">
+                    <option value="human">Human</option>
+                    <option value="orc">Orc</option>
+                    <option value="elf">Elf</option>
+                </select>
+
+                <label for="name-input">Enter your name:</label>
+                <input type="text" id="name-input" placeholder="Enter your name">
+
+                <label for="class-select">Choose your class:</label>
+                <select id="class-select">
+                    <option value="warrior">Warrior</option>
+                    <option value="rogue">Rogue</option>
+                    <option value="mage">Mage</option>
+                </select>
+
+                <button class="button" onclick="startCharacter()">Confirm Character</button>
+            </div>
+        </div>
+
         <div id="game-section" style="display: none;">
             <div id="player-info">
-                <h2>Player Stats</h2>
-                <p>Name: <span id="player-name"></span></p>
-                <p>Race: <span id="player-race"></span></p>
-                <p>Class: <span id="player-class"></span></p>
-                <p>Health: <span id="player-health"></span></p>
-                <p>Stamina: <span id="player-stamina"></span></p>
-                <p>Mana: <span id="player-mana"></span></p>
-                <p>Strength: <span id="player-strength"></span></p>
-                <p>Intelligence: <span id="player-intelligence"></span></p>
+                <h2>Player Info</h2>
+                <p>Name: <span id="player-name">Player</span></p>
+                <p>Race: <span id="player-race">Human</span></p>
+                <p>Class: <span id="player-class">Warrior</span></p>
+                <p>Health: <span id="player-health">100</span></p>
+                <p>Stamina: <span id="player-stamina">100</span></p>
+                <p>Mana: <span id="player-mana">100</span></p>
+                <p>Strength: <span id="player-strength">100</span></p>
+                <p>Intelligence: <span id="player-intelligence">100</span></p>
             </div>
 
-            <div id="monster-info">
-                <h2>Monster Stats</h2>
-                <p>Name: <span id="monster-name"></span></p>
-                <p>Health: <span id="monster-health"></span></p>
+            <div id="story">
+                <!-- Story content will be added dynamically here -->
             </div>
 
             <div id="action-buttons">
-                <button id="attack-btn" class="button">Attack</button>
-                <button id="run-btn" class="button">Run</button>
-                <button id="spell-btn" class="button">Cast Spell</button>
-            </div>
-
-            <div id="battle-log">
-                <h2>Battle Log</h2>
-                <ul id="battle-entries"></ul>
+                <button class="button" onclick="attack()">Attack</button>
+                <button class="button" onclick="run()">Run</button>
+                <button class="button" onclick="castSpell()">Cast Spell</button>
             </div>
         </div>
-
-        <!-- Start battle button (will appear after the dialogue) -->
-        <button id="battle-start-button" class="button" onclick="startBattleSequence()">Start Battle</button>
     </div>
 
     <script src="game.js"></script>
