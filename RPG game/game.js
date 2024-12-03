@@ -1,3 +1,4 @@
+// Player and monster objects
 let player = {};
 let monster = {
     name: "Goblin",
@@ -6,6 +7,7 @@ let monster = {
     intelligence: 5,
 };
 
+// Race and class configurations
 const races = {
     human: { health: 100, stamina: 100, intelligence: 100, strength: 100, maxWeight: 300 },
     orc: { health: 120, stamina: 80, intelligence: 80, strength: 120, maxWeight: 500 },
@@ -18,18 +20,13 @@ const classes = {
     mage: { intelligenceBonus: 30, manaBonus: 50, weapon: "Staff" },
 };
 
-// NPC Dialogue and Start of the Game
+// Start the game by showing character creation
 function startCharacterCreation() {
-    document.getElementById("npc-dialogue").innerText = "A villager approaches you, his face pale with worry. 'Please, stranger... Can you help me? My son went into the woods and hasn't returned. I fear the monsters... He's probably gone by now...'";
-    document.querySelector("button").style.display = "none"; // Hide Talk to NPC button
-
-    setTimeout(function () {
-        document.getElementById("npc-dialogue").innerText = "The villager's voice cracks as he continues, 'Please, find him... You seem capable.'";
-        document.getElementById("setup-section").style.display = "block"; // Show character creation section
-    }, 5000);
+    document.getElementById("story-container").style.display = "none";
+    document.getElementById("character-container").style.display = "block";
 }
 
-// Start the game with player choices
+// Confirm character creation and start the game
 function startGame() {
     const race = document.getElementById("race-select").value;
     const name = document.getElementById("name-input").value.trim() || "Player";
@@ -45,32 +42,12 @@ function startGame() {
     player.intelligence += classData.intelligenceBonus || 0;
     player.weapon = classData.weapon;
 
-    document.getElementById("setup-section").style.display = "none";
+    document.getElementById("character-container").style.display = "none";
     document.getElementById("game-section").style.display = "block";
     updateStats();
-
-    setTimeout(function () {
-        document.getElementById("npc-dialogue").innerText = "'Thank you... You must go quickly. The village will be safe for now. But please, do what you can for my son.'";
-        setTimeout(function () {
-            document.getElementById("npc-dialogue").innerText = "Suddenly, a loud roar shakes the ground! The village is under attack!";
-            setTimeout(function () {
-                document.getElementById("npc-dialogue").innerText = "As the sound of the roar echoes, you catch a glimpse of a dark figure lurking in the distance, a massive, corrupt creature that seems to radiate malice.";
-                setTimeout(function () {
-                    document.getElementById("npc-dialogue").innerText = "The villagers scream in panic as they rush to defend their homes. People are running, shouting, and trying to barricade themselves in their houses. You can see fear in their eyes as the attack begins.";
-                    setTimeout(function () {
-                        document.getElementById("npc-dialogue").innerText = "Before you can react, a goblin leaps from the shadows, knocking your weapon from your hand. You must act quickly!";
-                        setTimeout(function () {
-                            // Start battle after this sequence
-                            startBattleSequence();
-                        }, 3000);
-                    }, 4000);
-                }, 3000);
-            }, 4000);
-        }, 3000);
-    }, 2000);
 }
 
-// Update player's and monster's stats on the page
+// Update the player's stats on the page
 function updateStats() {
     document.getElementById("player-name").innerText = player.name;
     document.getElementById("player-race").innerText = player.race;
@@ -80,96 +57,25 @@ function updateStats() {
     document.getElementById("player-mana").innerText = player.mana;
     document.getElementById("player-strength").innerText = player.strength;
     document.getElementById("player-intelligence").innerText = player.intelligence;
-
-    document.getElementById("monster-name").innerText = monster.name;
-    document.getElementById("monster-health").innerText = monster.health;
 }
 
-// Battle Sequence Start (check if player has weapon)
-function startBattleSequence() {
-    // Hide the current dialogue and show the battle area
-    document.getElementById("battle-start-button").style.display = "inline-block";
-    document.getElementById("action-buttons").style.display = "inline-block";
-    document.getElementById("npc-dialogue").style.display = "none";
-    logBattle("You are forced to fight the goblin.");
-
-    // If the player doesn't have a weapon, set a flag for later
-    if (!player.weapon) {
-        logBattle("You don't have a weapon! You must fight with your bare hands.");
+// Action functions (attack, run, castSpell, etc.)
+function attack() {
+    // Check if the player has a weapon and perform the attack
+    if (player.weapon) {
+        // Implement attack logic here
+        console.log("Attacking with " + player.weapon);
+    } else {
+        console.log("You don't have a weapon!");
     }
 }
 
-// Unified action function: attack, run, and cast spell (checks if player has a weapon)
-function action(actionType) {
-    if (actionType === "attack") {
-        if (player.weapon) {
-            let damage = Math.floor(Math.random() * player.strength) + 10; // Higher damage if weapon is available
-            monster.health -= damage;
-            logBattle(`${player.name} attacks with ${player.weapon} for ${damage} damage!`);
-        } else {
-            let damage = Math.floor(Math.random() * player.strength / 2) + 1; // Lower damage without weapon
-            monster.health -= damage;
-            logBattle(`${player.name} punches the goblin for ${damage} damage!`);
-        }
-    } else if (actionType === "run") {
-        if (player.stamina >= 20) {
-            player.stamina -= 20;
-            logBattle(`${player.name} runs away from the goblin!`);
-        } else {
-            logBattle("Not enough stamina to run!");
-        }
-    } else if (actionType === "cast") {
-        if (player.mana >= 25) {
-            let damage = Math.floor(Math.random() * 30) + 10;
-            monster.health -= damage;
-            player.mana -= 25;
-            logBattle(`${player.name} casts Fireball for ${damage} damage!`);
-        } else {
-            logBattle("Not enough mana to cast Fireball.");
-        }
-    }
-    checkMonsterHealth();
-    monsterAttack();
-    restoreStamina();
-    updateStats();
+function run() {
+    // Implement run logic here
+    console.log("Running away!");
 }
 
-// Monster attack
-function monsterAttack() {
-    if (monster.health > 0) {
-        let damage = Math.floor(Math.random() * monster.strength) + 1;
-        player.health -= damage;
-        logBattle(`${monster.name} attacks back for ${damage} damage!`);
-    }
-    if (player.health <= 0) {
-        logBattle(`${player.name} has been defeated.`);
-    }
+function castSpell() {
+    // Implement cast spell logic here
+    console.log("Casting spell!");
 }
-
-// Check monster's health
-function checkMonsterHealth() {
-    if (monster.health <= 0) {
-        logBattle(`${monster.name} has been defeated.`);
-        logBattle("You recover your weapon!");
-        player.weapon = classes[player.class].weapon; // Get weapon back after killing the goblin
-        updateStats();
-    }
-}
-
-// Restore stamina
-function restoreStamina() {
-    player.stamina = Math.min(player.stamina + 10, races[player.race].stamina);
-}
-
-// Log battle events
-function logBattle(message) {
-    const log = document.getElementById("battle-entries");
-    const entry = document.createElement("li");
-    entry.textContent = message;
-    log.appendChild(entry);
-}
-
-// Hook up button events
-document.getElementById("attack-btn").addEventListener("click", () => action("attack"));
-document.getElementById("run-btn").addEventListener("click", () => action("run"));
-document.getElementById("spell-btn").addEventListener("click", () => action("cast"));
