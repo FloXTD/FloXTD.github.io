@@ -3,20 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Magic: The Gathering Deck Tester</title>
+    <title>MTG Deck Tester</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="icon.png" type="image/png">
 </head>
 <body>
-    <h1>MTG Deck Tester</h1>
-    <div class="deck-manager">
-        <h2>Deck Manager</h2>
-        <textarea id="deck-list" placeholder="Enter one card per line"></textarea>
-        <button onclick="loadDeck()">Load Deck</button>
-    </div>
-    <div class="game-simulator">
-        <h2>Game Simulator</h2>
-        <button onclick="drawCard()">Draw Card</button>
-        <div id="hand"></div>
+    <div class="container">
+        <header>
+            <h1>MTG Deck Tester</h1>
+        </header>
+        <main>
+            <div class="deck-manager">
+                <h2>Deck Manager</h2>
+                <textarea id="deck-list" placeholder="Enter one card per line"></textarea>
+                <button onclick="loadDeck()">Load Deck</button>
+            </div>
+            <div class="game-simulator">
+                <h2>Game Simulator</h2>
+                <button onclick="drawCard()">Draw Card</button>
+                <div id="hand"></div>
+            </div>
+        </main>
     </div>
     <script src="script.js"></script>
 </body>
