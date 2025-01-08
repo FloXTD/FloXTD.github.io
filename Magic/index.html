@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MTG Deck Tester</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="icon" href="icon.png" type="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR67yfDTlq7Rslo-eIrXaG2ays8adVPJRr8OV-A7W_sHw9gbcm_:https://assets.stickpng.com/images/6214ff04ba3c68672b23d6cf.png&s">
+    <link rel="icon" href="icon.png" type="image/png">
 </head>
 <body>
     <div class="container">
@@ -15,8 +15,9 @@
         <main>
             <div class="deck-manager">
                 <h2>Deck Manager</h2>
-                <textarea id="deck-list" placeholder="Enter one card per line"></textarea>
+                <textarea id="deck-list" placeholder="Enter one card per line (e.g., '4x Lightning Bolt')"></textarea>
                 <button onclick="loadDeck()">Load Deck</button>
+                <input type="file" id="deck-file" accept=".txt" onchange="uploadDeckFile(event)">
             </div>
             <div class="game-simulator">
                 <h2>Game Simulator</h2>
