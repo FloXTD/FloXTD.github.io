@@ -3,29 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MTG Deck Tester</title>
+    <title>Magic News Website</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="icon" href="icon.png" type="image/png">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>MTG Deck Tester</h1>
-        </header>
-        <main>
-            <div class="deck-manager">
-                <h2>Deck Manager</h2>
-                <textarea id="deck-list" placeholder="Enter one card per line (e.g., '4x Lightning Bolt')"></textarea>
-                <button onclick="loadDeck()">Load Deck</button>
-                <input type="file" id="deck-file" accept=".txt" onchange="uploadDeckFile(event)">
-            </div>
-            <div class="game-simulator">
-                <h2>Game Simulator</h2>
-                <button onclick="drawCard()">Draw Card</button>
-                <div id="hand"></div>
-            </div>
-        </main>
-    </div>
-    <script src="script.js"></script>
+    <header>
+        <h1>Magic News Website</h1>
+        <nav>
+            <ul>
+                <li><a href="#latest-news">Latest News</a></li>
+                <li><a href="#market-updates">Market Updates</a></li>
+                <li><a href="#external-tools">External Tools</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <section id="latest-news">
+            <h2>Latest News</h2>
+            <article>
+                <h3>New Expansion Set Released</h3>
+                <p>The latest expansion set has just been released, featuring new cards and mechanics...</p>
+            </article>
+            <article>
+                <h3>Upcoming Tournament Announced</h3>
+                <p>Get ready for the upcoming tournament with a prize pool of $50,000...</p>
+            </article>
+        </section>
+        
+        <section id="market-updates">
+            <h2>Market Updates</h2>
+            <article>
+                <h3>Biggest Price Increase</h3>
+                <p id="price-increase">Loading...</p>
+            </article>
+            <article>
+                <h3>Biggest Price Decrease</h3>
+                <p id="price-decrease">Loading...</p>
+            </article>
+        </section>
+        
+        <section id="external-tools">
+            <h2>External Tools</h2>
+            <article>
+                <h3>Draft Simulator</h3>
+                <p>Visit our partner website to use the draft simulator and practice your drafting skills.</p>
+                <a href="https://partnerwebsite.com/draft-simulator" target="_blank">Go to Draft Simulator</a>
+            </article>
+            <article>
+                <h3>Deck Tester</h3>
+                <p>Test your decks and see how they perform against various opponents on our partner website.</p>
+                <a href="https://partnerwebsite.com/deck-tester" target="_blank">Go to Deck Tester</a>
+            </article>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Magic News Website. All rights reserved.</p>
+    </footer>
+    
+    <script src="scripts.js"></script>
 </body>
 </html>
