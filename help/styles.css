@@ -1,0 +1,28 @@
+.hover-container {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 20px;
+}
+
+.hover-container img {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 200px;
+  border: 1px solid #ccc;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.hover-container:hover img {
+  display: block;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  margin-bottom: 10px;
+}
