@@ -23,20 +23,21 @@ body {
 
 .hover-container {
     position: relative;
-    display: block;
+    display: inline-block;
     margin-bottom: 20px;
 }
 
 .hover-container img {
-    display: none;
+    visibility: hidden;
     margin-top: 10px;
-    width: 200px;
+    width: auto;
+    max-width: 100%;
     border: 1px solid #ccc;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
 .hover-container:hover img {
-    display: block;
+    visibility: visible;
 }
 
 ul {
