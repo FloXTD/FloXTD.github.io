@@ -48,3 +48,8 @@ ul {
 li {
     margin-bottom: 20px;
 }
+
+a:hover {
+    color: blue;
+    font-weight: bold;
+}
