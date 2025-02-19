@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Learning Bot</title>
+</head>
+<body>
+    <h1>{{ greeting }}</h1>
+    
+    <h2>Perform a Calculation</h2>
+    <form action="/calculate" method="post">
+        <label for="operation">Operation:</label>
+        <select name="operation" id="operation">
+            <option value="add">Add</option>
+            <option value="subtract">Subtract</option>
+            <option value="multiply">Multiply</option>
+            <option value="divide">Divide</option>
+        </select><br>
+        <label for="num1">First Number:</label>
+        <input type="text" name="num1" id="num1"><br>
+        <label for="num2">Second Number:</label>
+        <input type="text" name="num2" id="num2"><br>
+        <button type="submit">Calculate</button>
+    </form>
+    {% if result %}
+    <p>Result: {{ result }}</p>
+    {% endif %}
+    
+    <h2>Get a Python Tip</h2>
+    <form action="/tip" method="get">
+        <button type="submit">Get Tip</button>
+    </form>
+    {% if tip %}
+    <p>Tip: {{ tip }}</p>
+    {% endif %}
+    
+    <h2>Take a Python Quiz</h2>
+    <form action="/quiz" method="post">
+        {% if question %}
+        <p>Quiz: {{ question }}</p>
+        <label for="answer">Your Answer:</label>
+        <input type="text" name="answer" id="answer"><br>
+        <button type="submit">Submit Answer</button>
+        {% else %}
+        <button type="submit">Start Quiz</button>
+        {% endif %}
+    </form>
+    {% if quiz_result %}
+    <p>{{ quiz_result }}</p>
+    {% endif %}
+</body>
+</html>
