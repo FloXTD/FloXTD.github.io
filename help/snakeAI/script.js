@@ -13,7 +13,7 @@ const tileCount = canvas.width / gridSize;
 
 // Initialize the snake, food, direction, score, and intervals
 let snake = [{ x: 10, y: 10 }];
-let food = { x: 5, y: 5 };
+let food = { x: 5, y: 5 }];
 let dx = 1, dy = 0;
 let score = 0;
 let gameInterval;
@@ -114,6 +114,7 @@ function aiMove() {
 
 // Event listener for the start button to start the game
 startButton.addEventListener('click', () => {
+    resetGame(); // Initialize the game state
     clearInterval(gameInterval);
     clearInterval(aiInterval);
     gameInterval = setInterval(update, 100);
