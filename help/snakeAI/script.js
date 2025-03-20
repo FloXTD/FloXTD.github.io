@@ -9,7 +9,7 @@ const gridSize = 20;
 const tileCount = canvas.width / gridSize;
 
 let snake = [{ x: 10, y: 10 }];
-let food = { x: 5, y: 5 };
+let food = { x: 5, y: 5 }];
 let dx = 1, dy = 0;
 let score = 0;
 let gameInterval;
@@ -40,7 +40,7 @@ function moveSnake() {
     }
 
     if (head.x < 0 || head.x >= tileCount || head.y < 0 || head.y >= tileCount || snakeCollision(head)) {
-        resetGame();
+        stopGame();
     }
 }
 
@@ -56,9 +56,12 @@ function placeFood() {
     food.y = Math.floor(Math.random() * tileCount);
 }
 
-function resetGame() {
+function stopGame() {
     clearInterval(gameInterval);
     clearInterval(aiInterval);
+}
+
+function resetGame() {
     snake = [{ x: 10, y: 10 }];
     dx = 1;
     dy = 0;
