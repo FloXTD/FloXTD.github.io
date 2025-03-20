@@ -1,12 +1,19 @@
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 
+const startButton = document.getElementById('startButton');
+const resetButton = document.getElementById('resetButton');
+const scoreElement = document.getElementById('score');
+
 const gridSize = 20;
 const tileCount = canvas.width / gridSize;
 
 let snake = [{ x: 10, y: 10 }];
 let food = { x: 5, y: 5 };
 let dx = 1, dy = 0;
+let score = 0;
+let gameInterval;
+let aiInterval;
 
 function drawSnake() {
     ctx.fillStyle = 'lime';
@@ -26,6 +33,8 @@ function moveSnake() {
 
     if (head.x === food.x && head.y === food.y) {
         placeFood();
+        score++;
+        scoreElement.textContent = score;
     } else {
         snake.pop();
     }
@@ -48,10 +57,17 @@ function placeFood() {
 }
 
 function resetGame() {
+    clearInterval(gameInterval);
+    clearInterval(aiInterval);
     snake = [{ x: 10, y: 10 }];
     dx = 1;
     dy = 0;
+    score = 0;
+    scoreElement.textContent = score;
     placeFood();
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawFood();
+    drawSnake();
 }
 
 function update() {
@@ -59,7 +75,6 @@ function update() {
     drawFood();
     drawSnake();
     moveSnake();
-    setTimeout(update, 100);
 }
 
 function aiMove() {
@@ -79,5 +94,13 @@ function aiMove() {
     }
 }
 
-update();
-setInterval(aiMove, 100);
+startButton.addEventListener('click', () => {
+    clearInterval(gameInterval);
+    clearInterval(aiInterval);
+    gameInterval = setInterval(update, 100);
+    aiInterval = setInterval(aiMove, 100);
+});
+
+resetButton.addEventListener('click', () => {
+    resetGame();
+});
