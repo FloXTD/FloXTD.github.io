@@ -7,7 +7,6 @@ let context;
 let snakeX = blockSize * 5;
 let snakeY = blockSize * 5;
 
-// Set the total number of rows and columns
 let speedX = 0;  //speed of snake in x coordinate.
 let speedY = 0;  //speed of snake in Y coordinate.
 
@@ -17,6 +16,8 @@ let foodX;
 let foodY;
 
 let gameOver = false;
+
+let score = 0;
 
 window.onload = function () {
     // Set board height and width
@@ -37,7 +38,7 @@ function update() {
     }
 
     // Background of a Game
-    context.fillStyle = "green";
+    context.fillStyle = "black";
     context.fillRect(0, 0, board.width, board.height);
 
     // Set food color and position
@@ -47,11 +48,11 @@ function update() {
     if (snakeX == foodX && snakeY == foodY) {
         snakeBody.push([foodX, foodY]);
         placeFood();
+        score++;
+        document.getElementById("score").innerText = "Score: " + score;
     }
 
-    // body of snake will grow
     for (let i = snakeBody.length - 1; i > 0; i--) {
-        // it will store previous part of snake to the current part
         snakeBody[i] = snakeBody[i - 1];
     }
     if (snakeBody.length) {
@@ -71,7 +72,6 @@ function update() {
         || snakeY < 0 
         || snakeY > total_row * blockSize) { 
         
-        // Out of bound condition
         gameOver = true;
         alert("Game Over");
     }
@@ -79,44 +79,32 @@ function update() {
     for (let i = 0; i < snakeBody.length; i++) {
         if (snakeX == snakeBody[i][0] && snakeY == snakeBody[i][1]) { 
             
-            // Snake eats own body
             gameOver = true;
             alert("Game Over");
         }
     }
 }
 
-// Movement of the Snake - We are using addEventListener
 function changeDirection(e) {
     if (e.code == "ArrowUp" && speedY != 1) { 
-        // If up arrow key pressed with this condition...
-        // snake will not move in the opposite direction
         speedX = 0;
         speedY = -1;
     }
     else if (e.code == "ArrowDown" && speedY != -1) {
-        //If down arrow key pressed
         speedX = 0;
         speedY = 1;
     }
     else if (e.code == "ArrowLeft" && speedX != 1) {
-        //If left arrow key pressed
         speedX = -1;
         speedY = 0;
     }
     else if (e.code == "ArrowRight" && speedX != -1) { 
-        //If Right arrow key pressed
         speedX = 1;
         speedY = 0;
     }
 }
 
-// Randomly place food
 function placeFood() {
-
-    // in x coordinates.
     foodX = Math.floor(Math.random() * total_col) * blockSize; 
-    
-    //in y coordinates.
     foodY = Math.floor(Math.random() * total_row) * blockSize; 
 }
