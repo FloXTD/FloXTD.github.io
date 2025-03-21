@@ -5,5 +5,12 @@ body {
 .geeks {
     font-size: 40px;
     font-weight: bold;
-    color: green;
+    color: black;
+}
+
+.center {
+    display: flex;
+    display: grid properties;
+    position: absolute;
+    transform: translate;
 }
