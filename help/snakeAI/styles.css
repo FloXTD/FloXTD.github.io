@@ -1,16 +1,29 @@
-/* Write CSS Here */
 body {
     text-align: center;
+    background-color: black;
+    color: white;
+    font-family: Arial, sans-serif;
 }
-.geeks {
+
+.codebullet {
     font-size: 40px;
     font-weight: bold;
-    color: black;
+    color: #00FF00; /* CodeBullet green */
 }
 
 .center {
     display: flex;
-    display: grid properties;
-    position: absolute;
-    transform: translate;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+#board {
+    border: 1px solid white;
+}
+
+#score {
+    font-size: 20px;
+    margin-top: 20px;
 }
