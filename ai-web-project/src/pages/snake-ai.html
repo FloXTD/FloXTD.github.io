@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake Game with AI</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <style>
+        #snake-canvas {
+            background: #222;
+            display: block;
+            margin: 30px auto 10px auto;
+            border: 2px solid #007BFF;
+        }
+        #learning-log {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+            font-size: 0.95em;
+            color: #333;
+            height: 120px;
+            overflow-y: auto;
+        }
+        .ai-controls {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .ai-controls button {
+            margin: 0 5px;
+            padding: 6px 14px;
+            font-size: 1em;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Snake Game: Watch AI Learn!</h1>
+        <nav>
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="research.html">Research</a></li>
+                <li><a href="learning.html">Learning</a></li>
+                <li><a href="snake-ai.html">Snake AI</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <h2>AI Snake Game</h2>
+            <div class="ai-controls">
+                <button onclick="startGame()">Start AI</button>
+                <button onclick="pauseGame()">Pause</button>
+                <button onclick="resetGame()">Reset</button>
+            </div>
+            <canvas id="snake-canvas" width="400" height="400"></canvas>
+            <div id="learning-log"></div>
+        </section>
+        <section>
+            <h3>How does the AI learn?</h3>
+            <p>
+                The AI uses a simple rule-based approach to play Snake. It senses the food and avoids collisions, learning from each game by updating its strategy to survive longer and eat more food. The learning path below shows the AI's decisions and improvements over time.
+            </p>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2023 AI Web Project. All rights reserved.</p>
+    </footer>
+    <script src="../assets/js/snake-ai.js"></script>
+</body>
+</html>
